@@ -7,31 +7,37 @@ const styles = {
     dashboard:{
         margin:0,
         padding:0,
-        background: 'linear-gradient(to bottom, dodgerblue 0%,darkturquoise 50%,#000000 50%,white 50%,white 100%)'
+        background: 'linear-gradient(to bottom, dodgerblue 0%,darkturquoise 30%,#000000 30%,white 30%,white 100%)'
     },
     card:{
         margin:'3%',
         backgroundColor:'ghostwhite'
     },
     cardTitle:{
-        margin:'3%',
+        margin:'5%',
         fontFamily:'Open Sans',
+        fontSize:'1.5rem',
         color:'lightslategray'
+    },
+    tableContainer:{
+        margin:'1rem'
     },
     tableToolbar:{
         border:'1px gainsboro solid',
-        backgroundColor:'white'
+        backgroundColor:'white',
+        borderRadius:'20px 20px 0px 0px'
     },
     tableTitle:{
         fontFamily:'Open Sans',
-        color:'lightslategray',
+        color:'dimgray',
         fontSize:'1.2rem',
         fontWeight:700
     },
     headCell:{
         fontFamily:'Open Sans',
         fontSize:'1rem',
-        backgroundColor:'azure',
+        fontWeight:'bold',
+        backgroundColor:'ghostwhite',
         color:'darkgray'
     },
     bodyCell:{
@@ -69,13 +75,13 @@ const Dashboard = () => {
     },[])
 
     useEffect(()=>{
-        console.log(dummy)
+        // console.log(dummy)
     },[dummy])
 
     return (
         <div style={styles.dashboard}>
             <Grid container>
-                <Grid item sm={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4}>
                     <Card style={styles.card} variant="outlined">
                         <h2 style={styles.cardTitle}>Total Donation</h2>
                         <CardContent>
@@ -83,7 +89,7 @@ const Dashboard = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item sm={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4}>
                     <Card style={styles.card} variant="outlined">
                         <h2 style={styles.cardTitle}>Donated Amount</h2>
                         <CardContent>
@@ -91,7 +97,7 @@ const Dashboard = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item sm={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4}>
                     <Card style={styles.card} variant="outlined">
                         <h2 style={styles.cardTitle}>User Type</h2>
                         <CardContent>
@@ -99,7 +105,7 @@ const Dashboard = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item sm={12}>
+                <Grid item sm={8} style={styles.tableContainer}>
                     <Toolbar style={styles.tableToolbar} variant="dense">
                         <span style={styles.tableTitle}>Donation History</span>
                     </Toolbar>

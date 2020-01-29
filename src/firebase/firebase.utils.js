@@ -21,18 +21,17 @@ export const createUserProfile = async (userAuth, additionalData) => {
         const snapShot = await userRef.get();
         if(!snapShot.exists){
 
-            const { displayName, email } = userAuth;
+            const { phoneNumber } = userAuth;
             const createdAt = new Date();
 
             try {
                 await userRef.set({
-                    displayName,
-                    email,
+                    phoneNumber,
                     createdAt,
                     ...additionalData
                 })
             }catch(err){
-                console.log('Error creating message'+err.message)
+                console.log('ERROR'+err.message)
             }
         }
         return userRef;
