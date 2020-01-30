@@ -57,6 +57,11 @@ const Login = () => {
 
     const Submitter = e => {
 
+        const code = formData.otp
+
+        const credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId, code);
+
+        firebase.auth().signInWithCredential(credential);
     }
 
     const Changer = e => {
@@ -75,16 +80,16 @@ const Login = () => {
                     <Grid container justify="center">
                         <h2 style={styles.title}>Login using mobile number</h2>
                         <Grid item sm={12} style={styles.formItem}>
-                            <TextField id="number" label="Phone Number" required value={phone} onChange={e=>Changer(e)} name="phone"/>
+                            <TextField label="Phone Number" required value={phone} onChange={e=>Changer(e)} name="phone"/>
+                        </Grid>
+                        <Grid item sm={12} style={styles.formItem}>
+                            <div id="recaptcha-container"></div>
                         </Grid>
                         <Grid item sm={12} style={styles.formItem}>
                             <Button variant="outlined" color="secondary" onClick={e=>RequestOTP()}>Request OTP</Button>
                         </Grid>
                         <Grid item sm={12} style={styles.formItem}>
-                            <TextField name="opt" label="OTP" required value={otp} onChange={e=>Changer(e)}/>
-                        </Grid>
-                        <Grid item sm={12} style={styles.formItem}>
-                            <div id="recaptcha-container"></div>
+                            <TextField name="otp" label="OTP" required value={otp} onChange={e=>Changer(e)}/>
                         </Grid>
                         <Grid item sm={12} style={styles.formItem}>
                             <Button variant="outlined" color="primary" onClick={e=>Submitter(e)}>Submit</Button>
