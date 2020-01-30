@@ -8,7 +8,10 @@ import Dashboard from './components/dashboard/Dashboard';
 import { setCurrentUser } from './actions/user.action';
 import { auth, createUserProfile } from './firebase/firebase.utils';
 import { Grid } from '@material-ui/core';
+import PrivateRoute from './components/routing/PrivateRoute';
 import Sidenav from './components/layouts/Sidenav';
+import Regsiter from './components/forms/Regsiter';
+import Scanner from './components/donate/Scanner';
 
 const styles = {
   main:{
@@ -61,7 +64,9 @@ const App = ({currentUser, setCurrentUser}) => {
           <Navbar/>
           <Switch>
             <Route exact path="/" render={()=> currentUser ? (<Redirect to="/dashboard"/>):<Login/>}/>
-            <Route exact path="/dashboard" component={Dashboard}/>
+            <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+            <PrivateRoute exact path="/register" component={Regsiter}/>
+            <PrivateRoute exact path="/donate" component={Scanner}/>
           </Switch>
         </Grid>
       </Grid>

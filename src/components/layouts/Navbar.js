@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Button, Drawer, List, ListItem, Grid, MenuItem, Menu }
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { unsetCurrentUser } from '../../actions/user.action';
+import Logo from '../../icons/help.svg'
 
 const styles = {
     navbar:{
@@ -21,7 +22,12 @@ const styles = {
         fontSize:'2rem',
         fontFamily: 'Roboto',
         textDecoration:'none',
-        fontWeight:'bolder'
+        fontWeight:'bolder',
+        padding:'1rem'
+    },
+    logo:{
+        height:'3rem',
+        width:'3rem'
     },
     username:{
         padding:'1rem',
@@ -35,7 +41,7 @@ const styles = {
     }
 }
 
-const Navbar = ({currentUser, unsetCurrentUser}) => {
+const Navbar = ({currentUser, registered, unsetCurrentUser}) => {
     
     const [menu, toggleMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -80,18 +86,17 @@ const Navbar = ({currentUser, unsetCurrentUser}) => {
                     <Toolbar>
                         <Grid container>
                             <Grid item sm={10}>
-                                <Link to="/" style={styles.brand}>Help On</Link>
+                                <Link to="/" style={styles.brand}>
+                                    <img style={styles.logo} src={Logo}/> Help On
+                                </Link>
                             </Grid>
                             <Grid item sm={2}>
                                 {currentUser ?
                                 <Fragment>
-                                {currentUser.displayName ? 
-                                <p style={styles.username}>{currentUser.displayName}</p> : 
-                                <Fragment>
                                     <Button style={styles.username} 
                                     aria-controls="simple-menu" aria-haspopup="true" 
                                     onClick={handleClick}>
-                                        {currentUser.phoneNumber}
+                                        {currentUser.name ? currentUser.name : currentUser.phoneNumber}
                                     </Button>
                                     <Menu
                                         id="simple-menu"
@@ -105,9 +110,15 @@ const Navbar = ({currentUser, unsetCurrentUser}) => {
                                                 Account
                                             </Link>
                                         </MenuItem>
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    </Menu>    
-                                </Fragment>}
+                                        <MenuItem onClick={handleClose}>
+                                            <Link to={`/register`}>
+                                                {registered ? "Edit Details" : "Register"}
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem onClick={handleLogout}>
+                                            Logout
+                                        </MenuItem>
+                                    </Menu>
                                 </Fragment>: <span></span>}
                             </Grid>
                         </Grid>
@@ -139,7 +150,8 @@ const Navbar = ({currentUser, unsetCurrentUser}) => {
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    registered: state.user.registered
 })
 
 export default connect(mapStateToProps, { unsetCurrentUser })(Navbar);

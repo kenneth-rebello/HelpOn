@@ -36,9 +36,45 @@ export const createUserProfile = async (userAuth, additionalData) => {
         }
         return userRef;
     }
-
 }
 
+export const updateUserProfile = async (formData, user) => {
+    try {
+        
+        const userRef = firestore.doc(`users/${user.id}`);
+        const snapShot = await userRef.get();
+
+        const { name, address, type } = formData;
+
+        await userRef.set({
+            ...snapShot.data(),
+            name,
+            address,
+            type,
+            registered: true
+        });
+
+        return userRef;
+
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const getMemberName = async id => {
+
+    try {
+        
+        const memberRef = firestore.doc(`members/${id}`);
+        const snapShot = await memberRef.get();
+        const memberData = snapShot.data();
+
+        return memberData.name
+        
+    } catch (err) {
+        console.log(err.message)
+    }
+}
 
 
 firebase.initializeApp(config);
@@ -46,10 +82,5 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 
 export const firestore = firebase.firestore();
-
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account'});
-
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;

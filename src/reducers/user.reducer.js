@@ -1,7 +1,9 @@
 import { SET_USER, UNSET_USER } from "../redux/types";
 
 const initialState = {
-    currentUser: null
+    currentUser: null,
+    registered: false,
+    loading: true
 }
 
 const userReducer = (state=initialState, action) => {
@@ -12,12 +14,15 @@ const userReducer = (state=initialState, action) => {
         case SET_USER:
             return {
                 ...state,
-                currentUser: payload
+                currentUser: payload,
+                registered: payload.registered,
+                loading:false
             }
         case UNSET_USER:
             return{
                 ...state,
-                currentUser: null
+                currentUser: null,
+                registered: false
             }
         default:
             return state
