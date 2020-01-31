@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import QrReader from 'react-qr-reader';
 import { FormControl, Select, TextField, Button } from '@material-ui/core';
 import { getMemberName } from '../../firebase/firebase.utils';
+import StripeButton from './StripeButton';
 
 const styles={
     scanner:{
@@ -33,9 +34,11 @@ const Scanner = () => {
         amount:''
     })
     const [done, setDone]  = useState(false);
+    const [dataID, setData] = useState(null)
 
     const handleScan = async data => {
         if (data && !done) {
+            setData(data)
             const name = await getMemberName(data);
             setFormData({
                 ...formData,
@@ -74,9 +77,7 @@ const Scanner = () => {
             <FormControl fullWidth style={styles.formGroup}>
                 <TextField onChange={e=>Changer(e)} value={formData.amount} label="Amount To Donate"/>
             </FormControl>
-            <Button variant="outlined" style={{color:'green'}} onClick={()=>Donate()}>
-                Donate
-            </Button>
+            <StripeButton price={formData.amount} user={dataID}/>
         </div>
     )
 }

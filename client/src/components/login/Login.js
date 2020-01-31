@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Box, TextField, Grid, Button, FormControl } from '@material-ui/core'
-import firebase from '../../firebase/firebase.utils'
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux'
+import { Box, TextField, Grid, Button, FormControl } from '@material-ui/core';
+import firebase from '../../firebase/firebase.utils';
 
 const styles = {
     box:{
@@ -28,7 +29,7 @@ const styles = {
     }
 }
 
-const Login = () => {
+const Login = ({history, currentUser}) => {
 
     const [formData, setFormData] = useState({
         phone:'',
@@ -48,6 +49,12 @@ const Login = () => {
         });
         
     },[])
+
+    useEffect(()=>{
+        if(currentUser){
+            history.push('/dashboard')
+        }
+    },[currentUser])
 
 
     const RequestOTP = e => {
@@ -112,4 +119,8 @@ const Login = () => {
     )
 }
 
-export default Login
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps)(Login);

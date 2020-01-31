@@ -53,7 +53,7 @@ const Navbar = ({currentUser, registered, unsetCurrentUser}) => {
         window.addEventListener('resize', updateSize);
 
         return () => {
-            window.removeEventListener('resize')
+            window.removeEventListener('resize', updateSize);
         }
     },[])
 
@@ -85,12 +85,12 @@ const Navbar = ({currentUser, registered, unsetCurrentUser}) => {
                 <AppBar position="fixed" style={styles.navbar}>
                     <Toolbar>
                         <Grid container>
-                            <Grid item sm={10}>
+                            <Grid item sm={9}>
                                 <Link to="/" style={styles.brand}>
                                     <img style={styles.logo} src={Logo}/> Help On
                                 </Link>
                             </Grid>
-                            <Grid item sm={2}>
+                            <Grid item sm={3}>
                                 {currentUser ?
                                 <Fragment>
                                     <Button style={styles.username} 

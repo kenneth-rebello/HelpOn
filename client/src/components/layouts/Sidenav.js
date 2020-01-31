@@ -40,6 +40,16 @@ const Sidenav = () => {
                         <CropFreeIcon/>{` `}Donate
                     </Link>
                 </ListItem>
+                <ListItem>
+                    <Link to="/new-member" style={{color:'goldenrod',...styles.opt}}>
+                        <CropFreeIcon/>{` `}New Member
+                    </Link>
+                </ListItem>
+                <ListItem>
+                    <Link to="/codes" style={{color:'black',...styles.opt}}>
+                        <CropFreeIcon/>{` `}QR Codes
+                    </Link>
+                </ListItem>
             </List>
         </div>
     )

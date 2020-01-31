@@ -77,6 +77,43 @@ export const getMemberName = async id => {
 }
 
 
+
+export const getMembers = async() => {
+
+    const memberRef = firestore.collection('members');
+    const snapShot = await memberRef.get();
+    const members = await snapShot.docs.map(snap => {
+        return {
+            ...snap.data(),
+            id: snap.id
+        }
+    });
+    return members;
+}
+
+export const addMember = async formData => {
+
+    const { name } = formData;
+    const docRef = await firestore.collection("members").add({
+        name
+    })
+
+    return docRef.id
+}
+
+export const updateWallet = async (user, amount) => {
+
+    const userRef = firestore.doc(`members/${user}`);
+    const snapShot = await userRef.get();
+
+    const memberData = snapShot.data()
+
+    await userRef.set({
+        ...memberData,
+        wallet: memberData.wallet ? memberData + amount : amount
+    });
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();

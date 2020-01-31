@@ -22,7 +22,8 @@ const userReducer = (state=initialState, action) => {
             return{
                 ...state,
                 currentUser: null,
-                registered: false
+                registered: false,
+                loading: false
             }
         default:
             return state

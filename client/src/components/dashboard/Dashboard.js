@@ -8,6 +8,7 @@ import NumberFormat from 'react-number-format';
 import ReceiptIcon from '../../icons/money.svg';
 import UserIcon from '../../icons/user.svg';
 import HelpIcon from '../../icons/value.svg';
+import { Link } from 'react-router-dom';
 
 const styles = {
     dashboard:{
@@ -65,7 +66,7 @@ const headers = [
     'HELPED', 'AMOUNT', 'DATE'
 ]
 
-const Dashboard = ({currentUser}) => {
+const Dashboard = ({history, currentUser}) => {
 
     const [dummy, setDummy] = useState([])
 
@@ -90,8 +91,10 @@ const Dashboard = ({currentUser}) => {
     },[])
 
     useEffect(()=>{
-        // console.log(dummy)
-    },[dummy])
+        if(currentUser && currentUser.type==="Merchant"){
+            history.push('/merchant-dashboard')
+        }
+    },[currentUser])
 
     return (
         <div style={styles.dashboard}>
@@ -127,7 +130,9 @@ const Dashboard = ({currentUser}) => {
                         </h2>
                         <CardContent>
                             <p style={styles.cardData}>
-                                { currentUser && currentUser.type ? currentUser.type : "Test"}
+                                { currentUser && currentUser.type ? currentUser.type : <Link to="/register">
+                                    Register Now
+                                </Link>}
                             </p>
                         </CardContent>
                     </Card>
